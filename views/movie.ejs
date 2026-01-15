@@ -1,0 +1,27 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ディズニー・アニメーション映画一覧</title>
+</head>
+<body>
+  <h2>ディズニー・アニメーション映画一覧</h2>
+  <p><a href="/movie_add_page">＋ 新しい映画を追加する</a></p>
+
+  <table border="1">
+    <tr><th>ID</th><th>タイトル</th><th>操作</th></tr>
+      <% let number = 0 %>
+      <% for( let row of data ) { %>
+        <tr>
+          <td><%= row.id %></td>
+          <td><a href="/movie/<%= number %>"><%= row.name %></a></td>
+          <td>
+            <a href="/movie_edit_page/<%= number %>">編集</a>
+            <a href="/movie_del/<%= number %>" onclick="return confirm('本当に削除しますか？')">削除</a>
+          </td>
+        </tr>
+        <% number += 1 %>
+      <% } %>
+  </table>
+</body>
+</html>

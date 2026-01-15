@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>キャラクターを追加する</title>
+</head>
+<body>
+    <h2>キャラクター新規登録</h2>
+    <form action="/char_add">
+        <label>ID: <input type="number" name="id" required></label><br>
+        <label>名前: <input type="text" name="name" required></label><br>
+        <label>誕生日: <input type="text" name="birthday" placeholder="MM/DD"></label><br>
+        <label>身長（cm）: <input type="text" name="height"></label><br>
+        <label>担当声優: <input type="text" name="voice"></label><br>
+        <input type="submit" value="登録">
+    </form>
+    <br>
+    <a href="/char">一覧に戻る</a>
+</body>
+</html>

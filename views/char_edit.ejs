@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>キャラクターを編集する</title>
+</head>
+<body>
+    <h2>キャラクター情報の編集</h2>
+    <form action="/char_update">
+        <input type="hidden" name="index" value="<%= index %>">
+        <label>ID: <input type="number" name="id" value="<%= data.id %>" required></label><br>
+        <label>名前: <input type="text" name="name" value="<%= data.name %>" required></label><br>
+        <label>誕生日: <input type="text" name="birthday" value="<%= data.birthday %>"></label><br>
+        <label>身長（cm）: <input type="text" name="height" value="<%= data.height %>"></label><br>
+        <label>担当声優: <input type="text" name="voice" value="<%= data.voice %>"></label><br>
+        <input type="submit" value="更新">
+    </form>
+    <br>
+    <a href="/char">キャンセル</a>
+</body>
+</html>

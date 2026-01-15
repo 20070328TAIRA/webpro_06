@@ -1,0 +1,27 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ディズニーキャラクター一覧</title>
+</head>
+<body>
+  <h2>ディズニーキャラクター一覧</h2>
+  <p><a href="/char_add_page">＋ 新しいキャラクターを追加する</a></p>
+
+  <table border="1">
+    <tr><th>ID</th><th>キャラクター名</th><th>操作</th></tr>
+      <% let number = 0 %>
+      <% for( let row of data ) { %>
+        <tr>
+          <td><%= row.id %></td>
+          <td><a href="/char/<%= number %>"><%= row.name %></a></td>
+          <td>
+            <a href="/char_edit_page/<%= number %>">編集</a>
+            <a href="/char_del/<%= number %>" onclick="return confirm('本当に削除しますか？')">削除</a>
+          </td>
+        </tr>
+        <% number += 1 %>
+      <% } %>
+  </table>
+</body>
+</html>

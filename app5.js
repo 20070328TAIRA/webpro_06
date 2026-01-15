@@ -112,4 +112,262 @@ app.get("/janken", (req, res) => {
   res.render( 'janken', display );
 });
 
+let char = [
+  { id:1, name:"ミッキーマウス"},
+  { id:2, name:"ミニーマウス"},
+  { id:3, name:"ドナルドダック"},
+  { id:4, name:"デイジーダック"},
+  { id:5, name:"チップ"},
+  { id:6, name:"デール"},
+];
+
+let char2 = [
+  { id:1, name:"ミッキーマウス", birthday:"11月18日", height:"96.5", voice:"星野貴紀"},
+  { id:2, name:"ミニーマウス", birthday:"11月18日", height:"96.5", voice:"遠藤綾"},
+  { id:3, name:"ドナルドダック", birthday:"6月9日", height:"105.0", voice:"山寺宏一"},
+  { id:4, name:"デイジーダック", birthday:"1月9日", height:"105.0", voice:"土井美加"},
+  { id:5, name:"チップ", birthday:"4月2日", height:"95.0", voice:"滝沢ロコ"},
+  { id:6, name:"デール", birthday:"4月2日", height:"95.0", voice:"稲葉実"},
+];
+
+// キャラクター一覧ページ
+app.get("/char", (req, res) => {
+  res.render('char', {data: char2});
+});
+
+// キャラクター詳細ページ
+app.get("/char/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = char2[number];
+  res.render('char_detail', { data: detail });
+});
+
+// 入力画面を表示する
+app.get("/char_add_page", (req, res) => {
+  res.sendFile(__dirname + "/views/char_add.html");
+});
+
+// データを追加する処理
+app.get("/char_add", (req, res) => {
+  let newdata = {
+    id: Number(req.query.id),
+    name: req.query.name,
+    birthday: req.query.birthday,
+    height: req.query.height,
+    voice: req.query.voice
+  };
+  
+  // 配列(char2)に新しいデータを追加
+  char2.push(newdata);
+  
+  // 追加が終わったら一覧画面に自動で戻る（リダイレクト）
+  res.redirect("/char");
+});
+
+// --- 削除機能 ---
+app.get("/char_del/:number", (req, res) => {
+  const number = req.params.number;
+  // 配列から指定した番目の要素を1つ削除する
+  char2.splice(number, 1);
+  res.redirect("/char");
+});
+
+// --- 編集画面の表示 ---
+app.get("/char_edit_page/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = char2[number];
+  // 編集対象のデータと、そのインデックス番号を渡す
+  res.render('char_edit', { data: detail, index: number });
+});
+
+// --- データの更新処理 ---
+app.get("/char_update", (req, res) => {
+  const index = req.query.index;
+  // 送られてきた内容で配列の中身を書き換える
+  char2[index] = {
+    id: Number(req.query.id),
+    name: req.query.name,
+    birthday: req.query.birthday,
+    height: req.query.height,
+    voice: req.query.voice
+  };
+  res.redirect("/char");
+});
+
+
+
+
+let movie = [
+  { id:1, name:"白雪姫"},
+  { id:2, name:"シンデレラ"},
+  { id:3, name:"アラジン"},
+  { id:4, name:"リトル・マーメイド"},
+  { id:5, name:"美女と野獣"},
+  { id:6, name:"ライオン・キング"},
+  { id:7, name:"アナと雪の女王"},
+  { id:8, name:"ズートピア"},
+  { id:9, name:"トイ・ストーリー"},
+];
+
+let movie2 = [
+  { id:1, name:"白雪姫", birthday:"1950年9月26日", time:"83", next:"なし"},
+  { id:2, name:"シンデレラ", birthday:"1952年3月7日", time:"75", next:"シンデレラⅡ，シンデレラⅢ戻された時計の針"},
+  { id:3, name:"アラジン", birthday:"1993年8月7日", time:"90", next:"アラジン〜ジャファーの逆襲〜，アラジン完結編〜盗賊王の伝説〜，実写版アラジン"},
+  { id:4, name:"リトル・マーメイド", birthday:"1991年7月21日", time:"83", next:"リトル・マーメイドⅡ〜Return to The Sea〜，リトル・マーメイドⅢ〜はじまりの物語〜，実写版リトル・マーメイド"},
+  { id:5, name:"美女と野獣", birthday:"1992年9月23日", time:"91", next:"美女と野獣〜ベルの素敵なプレゼント〜，美女と野獣〜ベルのファンタジーワールド〜，実写版美女と野獣"},
+  { id:6, name:"ライオン・キング", birthday:"1994年7月23日", time:"88", next:"ライオン・キング２，ライオン・キング３，実写版ライオン・キング"},
+  { id:7, name:"アナと雪の女王", birthday:"2014年3月14日", time:"102", next:"アナと雪の女王２"},
+  { id:8, name:"ズートピア", birthday:"2016年4月23日", time:"108", next:"ズートピア２"},
+  { id:9, name:"トイ・ストーリー", birthday:"1996年3月23日", time:"81", next:"トイ・ストーリー２，トイ・ストーリー３，トイ・ストーリー４"},
+];
+
+
+// 一覧ページ
+app.get("/movie", (req, res) => {
+  res.render('movie', {data: movie2});
+});
+
+// 詳細ページ
+app.get("/movie/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = movie2[number];
+  res.render('movie_detail', { data: detail });
+});
+
+// 入力画面を表示する
+app.get("/movie_add_page", (req, res) => {
+  res.sendFile(__dirname + "/views/movie_add.html");
+});
+
+// データを追加する処理
+app.get("/movie_add", (req, res) => {
+  let newdata = {
+    id: Number(req.query.id),
+    name: req.query.name,
+    birthday: req.query.birthday,
+    time: req.query.time,
+    next: req.query.next
+  };
+  
+  // 配列(char2)に新しいデータを追加
+  movie2.push(newdata);
+  
+  // 追加が終わったら一覧画面に自動で戻る（リダイレクト）
+  res.redirect("/movie");
+});
+
+// --- 削除機能 ---
+app.get("/movie_del/:number", (req, res) => {
+  const number = req.params.number;
+  // 配列から指定した番目の要素を1つ削除する
+  movie2.splice(number, 1);
+  res.redirect("/movie");
+});
+
+// --- 編集画面の表示 ---
+app.get("/movie_edit_page/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = movie2[number];
+  // 編集対象のデータと、そのインデックス番号を渡す
+  res.render('movie_edit', { data: detail, index: number });
+});
+
+// --- データの更新処理 ---
+app.get("/movie_update", (req, res) => {
+  const index = req.query.index;
+  // 送られてきた内容で配列の中身を書き換える
+  movie2[index] = {
+    id: Number(req.query.id),
+    name: req.query.name,
+    birthday: req.query.birthday,
+    time: req.query.time,
+    next: req.query.next
+  };
+  res.redirect("/movie");
+});
+
+
+
+
+
+let park = [
+  { id:1, name:"ディズニーランド・リゾート"},
+  { id:2, name:"ウォルト・ディズニー・ワールド・リゾート"},
+  { id:3, name:"東京ディズニーリゾート"},
+  { id:4, name:"ディズニーランド・パリ"},
+];
+
+let park2 = [
+  { id:1, name:"ディズニーランド・リゾート", birthday:"1955年7月17日", kuni:"アメリカ・カリフォルニア", etc:"世界初のディズニーリゾート"},
+  { id:2, name:"ウォルト・ディズニー・ワールド・リゾート", birthday:"1971年10月1日", kuni:"アメリカ・フロリダ", etc:"150個以上のアトラクションがあり、東京ディズニーリゾートの約50倍以上の広さ"},
+  { id:3, name:"東京ディズニーリゾート", birthday:"1983年4月15日", kuni:"日本", etc:"2001年に海をテーマにしたディズニーシーが開園した"},
+  { id:4, name:"ディズニーランド・パリ", birthday:"1992年4月12日", huni:"フランス", etc:"眠れる森の美女の城がシンボルになっている"},
+];
+
+
+// 一覧ページ
+app.get("/park", (req, res) => {
+  res.render('park', {data: park2});
+});
+
+// 詳細ページ
+app.get("/park/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = park2[number];
+  res.render('park_detail', { data: detail });
+});
+
+// 入力画面を表示する
+app.get("/park_add_page", (req, res) => {
+  res.sendFile(__dirname + "/views/park_add.html");
+});
+
+// データを追加する処理
+app.get("/park_add", (req, res) => {
+  let newdata = {
+    id: Number(req.query.id),
+    name: req.query.name,
+    birthday: req.query.birthday,
+    kuni: req.query.kuni,
+    etc: req.query.etc
+  };
+  
+  // 配列(char2)に新しいデータを追加
+  park2.push(newdata);
+  
+  // 追加が終わったら一覧画面に自動で戻る（リダイレクト）
+  res.redirect("/park");
+});
+
+// --- 削除機能 ---
+app.get("/park_del/:number", (req, res) => {
+  const number = req.params.number;
+  // 配列から指定した番目の要素を1つ削除する
+  park2.splice(number, 1);
+  res.redirect("/park");
+});
+
+// --- 編集画面の表示 ---
+app.get("/park_edit_page/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = park2[number];
+  // 編集対象のデータと、そのインデックス番号を渡す
+  res.render('park_edit', { data: detail, index: number });
+});
+
+// --- データの更新処理 ---
+app.get("/park_update", (req, res) => {
+  const index = req.query.index;
+  // 送られてきた内容で配列の中身を書き換える
+  park2[index] = {
+    id: Number(req.query.id),
+    name: req.query.name,
+    birthday: req.query.birthday,
+    kuni: req.query.kuni,
+    etc: req.query.etc
+  };
+  res.redirect("/park");
+});
+
+
 app.listen(8080, () => console.log("Example app listening on port 8080!"));

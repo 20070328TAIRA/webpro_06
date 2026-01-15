@@ -1,0 +1,20 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title><%= data.name %></title>
+</head>
+<body>
+  <h2><%= data.name %>の詳細</h2>
+  <table border="1">
+    <tr><th>項目</th><th>データ</th></tr>
+    <tr><td>ID</td><td><%= data.id %></td></tr>
+    <tr><td>名前</td><td><%= data.name %></td></tr>
+    <tr><td>開園日</td><td><%= data.birthday %></td></tr>
+    <tr><td>国</td><td><%= data.kuni %></td></tr>
+    <tr><td>特徴</td><td><%= data.etc %></td></tr>
+  </table>
+  <br>
+  <a href="/park">一覧に戻る</a>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>パークを追加する</title>
+</head>
+<body>
+    <h2>パーク新規登録</h2>
+    <form action="/park_add">
+        <label>ID: <input type="number" name="id" required></label><br>
+        <label>名前: <input type="text" name="name" required></label><br>
+        <label>開園日: <input type="text" name="birthday" placeholder="YY/MM/DD"></label><br>
+        <label>国: <input type="text" name="kuni"></label><br>
+        <label>特徴: <input type="text" name="etc"></label><br>
+        <input type="submit" value="登録">
+    </form>
+    <br>
+    <a href="/park">一覧に戻る</a>
+</body>
+</html>
